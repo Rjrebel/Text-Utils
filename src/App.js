@@ -21,16 +21,31 @@ function App() {
     }, 1500);
   };
 
-  const toggleModeHandler = () => {
-    if (mode === "light") {
-      setMode("dark");
-      document.body.style.backgroundColor = "grey";
-      showAlert("Dark mode has been enabled", "success");
-    } else {
-      setMode("light");
-      document.body.style.backgroundColor = "white";
-      showAlert("Light mode has been enabled", "success");
+  const removeBodyClasses = ()=> {
+    document.body.classList.remove('bg-primary');
+    document.body.classList.remove('bg-info');
+    document.body.classList.remove('bg-danger');
+    document.body.classList.remove('bg-success');
+    document.body.classList.remove('bg-warning');
+  }
+
+  const toggleModeHandler = (cls) => {
+
+    if( cls === null){
+      if (mode === "light") {
+        setMode("dark");
+        document.body.style.backgroundColor = "grey";
+        showAlert("Dark mode has been enabled", "success");
+      } else {
+        setMode("light");
+        document.body.style.backgroundColor = "white";
+        showAlert("Light mode has been enabled", "success");
+      }
     }
+    console.log(cls);
+    removeBodyClasses();
+    document.body.classList.add('bg-'+cls);
+    
   };
   return (
     <Router>
@@ -45,12 +60,12 @@ function App() {
               element={
                 <TextForm
                   showAlert={showAlert}
-                  heading="Enter your text below!"
+                  heading="Try TextUtils - Word Counter, Char Counter, Remove extra spaces, etc"
                   mode={mode}
                 />
               }
             />
-            <Route path="/about" element={<About />} />
+            <Route path="/about" element={<About mode={mode} />} />
           </Routes>
         </div>
       </div>
